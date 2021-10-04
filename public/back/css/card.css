@@ -1,0 +1,41 @@
+.ui-card {
+    margin-bottom: 30px;
+    border: 0px;
+    border-radius: 0.625rem;
+    box-shadow: 6px 11px 41px -28px #a99de7;
+}
+
+.ui-card .ui-card-body {
+    padding: 1.88rem 1.81rem;
+}
+
+.ui-card-title {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 18px;
+}
+
+.gradient-1{
+    background-image: linear-gradient(230deg, #759bff, #843cf6);
+}
+
+.gradient-2{
+    background-image: linear-gradient(230deg, #0e4cfd, #6a8eff);
+}
+
+.opacity-5 {
+    opacity: 0.5;
+}
+
+.display-5 {
+    font-size: 3rem;
+    margin-top: -20px;
+}
+
+.float-right {
+    float: right !important;
+}
+
+.letter-spacing {
+    letter-spacing: 3px;
+}
