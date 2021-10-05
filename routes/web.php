@@ -40,12 +40,13 @@ Route::group(['middleware' => ['auth'] ], function() {
         Route::get('category/create', [PageController::class, 'category'])
                 ->name('admin.pages.category.index');
 
-        Route::get('company/create', [PageController::class, 'company'])
+        Route::get('companies', [PageController::class, 'company'])
                 ->name('admin.pages.company.index');
+
+        Route::delete('company/delete/{company_id}', [PageController::class, 'destroy_company']);
 
         Route::get('vacancy', [PageController::class, 'vacancy'])
                 ->name('admin.pages.vacancy.index');
-
 
         Route::delete('vacancy/delete/{vacancy_id}', [VacancyController::class, 'destroy']);
 

@@ -55,18 +55,6 @@ class VacancyRepository
         return $this->vacancyType->orderBy('id', 'asc')->get();
     }
 
-    public function getVacancy()
-    {
-        return $this->vacancy->with([
-            'company', 
-            'payment', 
-            'category', 
-            'location', 
-            'language', 
-            'experience', 
-            ])->latest()->paginate(10);
-    }
-
     public function generateOrderId()
     {
         return Str::substr(Str::upper(md5(Str::random(50))), 0, 20);

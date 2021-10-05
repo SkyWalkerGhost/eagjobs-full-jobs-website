@@ -31,7 +31,7 @@ class PageController extends Controller
         $this->vacancyRepository->vacancyPostingPeriodHasExpired();
 
         return view('admin.pages.vacancy.index')->with([
-            'getVacancy' => $this->vacancyRepository->getVacancy(),
+            'getVacancy' => $this->backQueryRepository->getVacancy(),
         ]);
     }
 
@@ -42,7 +42,16 @@ class PageController extends Controller
 
     public function company()
     {
-        return view('admin.pages.company.index');
+        return view('admin.pages.company.index')->with([
+            'getCompanyUsers' => $this->backQueryRepository->getCompanyUsers(),
+        ]);
+    }
+
+    public function destroy_company()
+    {
+        $this->backQueryRepository->deleteCompany();
+
+        return back()->with('success', 'კომპანია წაშლილია');
     }
 
     public function search()

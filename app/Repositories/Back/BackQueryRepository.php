@@ -3,33 +3,38 @@
 namespace App\Repositories\Back;
 
 use Illuminate\Http\Request;
-use App\Models\Category;
-use App\Models\Location;
-use App\Models\Experience;
-use App\Models\Language;
 use App\Models\Vacancy;
-use App\Models\VacancyType;
-use App\Models\Payment;
+use App\Models\Company;
 use Carbon\Carbon;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
 use ProtoneMedia\LaravelCrossEloquentSearch\Search;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+use DB;
 
 class BackQueryRepository
 {
-    public function __construct(
-                Request $request,
-                Category $category, Experience $experience, 
-                Location $location, Language $language,
-                Vacancy $vacancy, VacancyType $vacancyType) {
+    public function __construct(Request $request, Vacancy $vacancy, Company $company) {
 
-        $this->request      = $request;
-        $this->category     = $category;
-        $this->experience   = $experience;
-        $this->language     = $language;
-        $this->location     = $location;
-        $this->vacancyType  = $vacancyType;
-        $this->vacancy      = $vacancy;
+        $this->request  = $request;
+        $this->vacancy  = $vacancy;
+        $this->company  = $company;
+    }
+
+    public function getVacancy()
+    {
+        return $this->vacancy->with([
+            'company', 
+            'payment', 
+            'category', 
+            'location', 
+            'language', 
+            'experience', 
+            ])->latest()->paginate(10);
+    }
+
+    public function getCompanyUsers()
+    {
+        return $this->company->latest()->paginate(10);
     }
 
     public function getVacancyTypeCountAndSum()
@@ -48,5 +53,28 @@ class BackQueryRepository
                 ->orderByDesc()
                 ->paginate(10)
                 ->get($this->request->query('search'));
+    }
+
+    public function getCompanyRow()
+    {
+        return $this->company->where('id', $this->request->company_id)->firstOrFail();
+    }
+
+    public function imagePath()
+    {
+        return public_path() . '/storage' . str_replace('public', "", $this->getCompanyRow()->photo);
+    }
+
+    public function removeImageFromStorageFolder()
+    {
+        if(File::exists($this->imagePath())) {
+            File::delete($this->imagePath());
+        }
+    }
+
+    public function deleteCompany()
+    {
+        $this->removeImageFromStorageFolder();
+        $this->getCompanyRow()->delete();
     }
 }

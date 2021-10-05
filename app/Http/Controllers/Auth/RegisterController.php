@@ -53,7 +53,7 @@ class RegisterController extends Controller
     protected function createCompanyUser(Request $request)
     {
         $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:100'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:companies'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
             'check_mark' => ['required'],

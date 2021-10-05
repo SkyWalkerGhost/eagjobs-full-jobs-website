@@ -15,7 +15,7 @@
                             {{ Str::limit(auth()->guard('company')->user()->name, 20) }}
                         </span>
                     @else
-                        <img    src="{{ asset('front/images/noimage.jpg') }}" 
+                        <img    src="{{ asset('back/img/NoImageFound.png') }}" 
                                 class="company-logo" 
                                 alt="{{ auth()->guard('company')->user()->name }}">
                         <span class="text-white"> 
