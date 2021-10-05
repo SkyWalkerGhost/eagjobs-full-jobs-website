@@ -18,7 +18,7 @@ class SendInvoiceMailListener
                         ->where('id', $event->invoice->vacancy_id)
                         ->firstOrFail();
 
-        $email = 'avtoshergelashvili11@gmail.com';
+        $email = 'examle@gmail.com';
    
         $content = [
             'vacancy_name'      => $vacancy->name,
